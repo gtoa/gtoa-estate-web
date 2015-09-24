@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.renren.gota.webserver.common.annotation.LoginRequired;
 import com.renren.gota.webserver.model.User;
 import com.renren.gota.webserver.service.UserService;
 
@@ -19,6 +20,7 @@ public class HomeController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
+    @LoginRequired
     public String getIndex() {
          
         List<User> userList = userService.selectAllUser();

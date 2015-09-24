@@ -3,7 +3,7 @@ package com.renren.gota.webserver.model;
 public class User {
 
     private String name;
-    private String id;
+    private int id;
     private String account;
     private String password; // 简单为见，直接明文存储
 
@@ -27,11 +27,11 @@ public class User {
         this.name = name;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
