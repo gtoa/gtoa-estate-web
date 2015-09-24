@@ -16,14 +16,15 @@ import java.util.List;
  * @Date 2015-09-23 19:59.
  */
 @Controller
+@RequestMapping(value = "gmail")
 public class GmailContactController {
 
 
-    @RequestMapping(value = "contact", method = RequestMethod.GET)
-    @ResponseBody
-    public String getIndex() {
-        return "contacts";
+    @RequestMapping(value = "contacts", method = RequestMethod.GET)
+    public ModelAndView getIndex() {
+        ModelAndView mav = new ModelAndView("contacts");
+        mav.addObject("item", "aa");
+        return mav;
     }
-
 
 }
