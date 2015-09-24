@@ -1,5 +1,7 @@
 package com.renren.gota.webserver.util;
 
+import com.renren.gota.webserver.model.User;
+import com.renren.gota.webserver.model.UserToken;
 import net.sf.json.JSONObject;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.logging.Log;
@@ -22,8 +24,8 @@ public class OAuth2Util {
      * @param code 调用https://accounts.google.com/o/oauth2/auth授权接口获取的code
      * @return 存储获取的token 和 refresh_token 返回token值
      */
-    public static String getAccessTokenByCode(String code) {
-        String rs = "";
+    public static UserToken getAccessTokenByCode(String code) {
+        UserToken ut = null;
         NameValuePair[] params = {
                 new NameValuePair("code", code),
                 new NameValuePair("client_id", GmailConstants.CONSUMER_KEY),
@@ -34,15 +36,17 @@ public class OAuth2Util {
         try {
             JSONObject json = JSONObject.fromObject(HttpUtils.postMethod(GmailConstants.GET_TOKEN_URL, params));
             String accessToken = json.getString("access_token").trim();
-            String refrestToken = json.getString("refresh_token").trim();
+            String refreshToken = json.getString("refresh_token").trim();
+            ut = new UserToken();
+            ut.setAccessToken(accessToken);
+            ut.setRefreshToken(refreshToken);
+            ut.setCode(code);
 
-            //TODO:  存储token值
-            rs = accessToken;
         } catch (IOException e) {
             logger.error("get token failed. ", e);
 
         }
-        return rs;
+        return ut;
     }
 
     /**

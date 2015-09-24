@@ -9,8 +9,11 @@
 <html>
 <head>
     <title>用户授权页面</title>
+    <%--<link href="/css/bootstrap.min.css" rel="stylesheet">--%>
+    <script src="/js/jquery.min.js"></script>
+
 </head>
 <body>
-    <button onclick=""> Google 授权 </button>
+    <a href="">授权</a>
 </body>
 </html>
