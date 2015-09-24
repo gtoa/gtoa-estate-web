@@ -12,6 +12,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.renren.gota.webserver.constant.Constants;
+import com.renren.gota.webserver.dao.UserDAO;
+import com.renren.gota.webserver.model.User;
 import com.renren.gota.webserver.service.CheckLoginService;
 import com.renren.gota.webserver.utils.CookieUtils;
 import com.renren.gota.webserver.utils.HandlerMethodUtils;
@@ -20,6 +22,9 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
 
     @Autowired
     private CheckLoginService checkLoginService;
+
+    @Autowired
+    private UserDAO userDAO;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -47,6 +52,9 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
         boolean checkLoginResult = checkLoginService.checkLogin(userIdString, sessionId);
 
         if (checkLoginResult) {
+            int id = Integer.parseInt(userIdString);
+            User user = userDAO.getUserById(id);
+            request.setAttribute("user", user);
             return true;
         } else {
 

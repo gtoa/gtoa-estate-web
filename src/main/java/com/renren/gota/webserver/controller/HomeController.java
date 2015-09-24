@@ -1,6 +1,6 @@
 package com.renren.gota.webserver.controller;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +21,10 @@ public class HomeController {
     @RequestMapping(value = "/index", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @LoginRequired
-    public String getIndex() {
-         
-        List<User> userList = userService.selectAllUser();
+    public String getIndex(HttpServletRequest request) {
+        User user = (User) request.getAttribute("user");
         StringBuilder sb = new StringBuilder();
-        for (User user : userList) {
-            sb.append("id:" + user.getId() + ", account:" + user.getAccount() + ", name:" + user.getName() + "\n");
-        }
+        sb.append("id:" + user.getId() + ", account:" + user.getAccount() + ", name:" + user.getName() + "\n");
         return sb.toString();
     }
 

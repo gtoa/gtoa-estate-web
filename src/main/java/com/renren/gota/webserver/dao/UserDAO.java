@@ -17,7 +17,7 @@ public interface UserDAO {
     @Select("select " + FIELDS + " from " + TABLE_NAME)
     public List<User> selectAll();
 
-    @Select("select " + FIELDS + " from " + TABLE_NAME)
+    @Select("select " + FIELDS + " from " + TABLE_NAME + " where id=#{id}")
     public User getUserById(int id);
 
     @Select("select " + FIELDS + " from " + TABLE_NAME + " where account=#{account}")
