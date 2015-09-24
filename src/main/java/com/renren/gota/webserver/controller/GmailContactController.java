@@ -27,4 +27,6 @@ public class GmailContactController {
         return mav;
     }
 
+    @RequestMapping(value = "contacts")
+
 }
