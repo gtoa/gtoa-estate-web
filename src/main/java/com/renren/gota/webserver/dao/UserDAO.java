@@ -12,7 +12,7 @@ import com.renren.gota.webserver.model.User;
 public interface UserDAO {
 
     String TABLE_NAME = "user";
-    String FIELDS = "id, name, account, password";
+    String FIELDS = "id, account, password";
 
     @Select("select " + FIELDS + " from " + TABLE_NAME)
     public List<User> selectAll();
@@ -23,9 +23,6 @@ public interface UserDAO {
     @Select("select " + FIELDS + " from " + TABLE_NAME + " where account=#{account}")
     public User getUserByAccount(String account);
 
-    @Select("select " + FIELDS + " from " + TABLE_NAME + " where name=#{name}")
-    public User getUserByName(String name);
-
-    @Insert("insert into " + TABLE_NAME + " set name=#{name}, account=#{account}, password=#{password}")
+    @Insert("insert into " + TABLE_NAME + " set account=#{account}, password=#{password}")
     public void insert(User user);
 }

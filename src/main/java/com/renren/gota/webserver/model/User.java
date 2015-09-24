@@ -2,7 +2,6 @@ package com.renren.gota.webserver.model;
 
 public class User {
 
-    private String name;
     private int id;
     private String account;
     private String password; // 简单为见，直接明文存储
@@ -13,18 +12,9 @@ public class User {
     public User(){
     }
 
-    public User(String account, String name, String password){
+    public User(String account, String password){
         this.account = account;
-        this.name = name;
         this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getId() {

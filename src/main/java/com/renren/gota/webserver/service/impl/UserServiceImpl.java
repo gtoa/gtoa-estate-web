@@ -26,11 +26,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectByName(String name) {
-        return userDAO.getUserByName(name);
-    }
-
-    @Override
     public User selectByAccount(String account) {
         return userDAO.getUserByAccount(account);
     }

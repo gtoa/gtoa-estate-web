@@ -13,6 +13,6 @@ public interface Constants {
 
     interface WebURLConstants {
 
-        String LOGIN_URL_WEB = "/";
+        String LOGIN_URL_WEB = "/login";
     }
 }

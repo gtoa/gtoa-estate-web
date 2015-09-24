@@ -43,20 +43,6 @@ public class LoginServiceImpl implements LoginService {
         return login(user, response);
     }
 
-    @Override
-    public boolean loginByName(String name, String password, HttpServletResponse response) {
-        User user = userDAO.getUserByName(name);
-        if (null == user) {
-            return false;
-        }
-
-        String realPassword = user.getPassword();
-        if (!realPassword.equals(password)) {
-            return false;
-        }
-
-        return login(user, response);
-    }
 
     private boolean login(User user, HttpServletResponse response) {
 

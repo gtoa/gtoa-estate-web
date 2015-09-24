@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.renren.gota.webserver.constant.Constants;
 import com.renren.gota.webserver.service.LoginService;
@@ -20,15 +19,14 @@ public class LoginController {
     private LoginService loginService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView getLoginIndex() {
-        ModelAndView mav = new ModelAndView("login");
-        return mav;
+    public String getLoginIndex() {
+        return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = Constants.RETURN_JSON_FORMAT)
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String login(HttpServletResponse response, @RequestParam("account") String account,
-        @RequestParam("name") String name, @RequestParam("password") String password) {
+        @RequestParam("password") String password) {
 
         boolean succ = false;
 
@@ -36,10 +34,10 @@ public class LoginController {
             succ = loginService.loginByAccount(account, password, response);
         }
 
-        if (!succ && null != name && !"".equals(name)) {
-            succ = loginService.loginByName(name, password, response);
+        if (succ) {
+            return "login success";
         }
 
-        return "login:" + succ;
+        return "login error";
     }
 }

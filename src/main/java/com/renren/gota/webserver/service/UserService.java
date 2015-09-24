@@ -15,7 +15,5 @@ public interface UserService {
 
     User selectById(int id);
 
-    User selectByName(String name);
-
     User selectByAccount(String account);
 }

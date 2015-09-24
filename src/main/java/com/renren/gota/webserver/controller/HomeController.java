@@ -18,19 +18,14 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ResponseBody
     @LoginRequired
     public String getIndex(HttpServletRequest request) {
         User user = (User) request.getAttribute("user");
         StringBuilder sb = new StringBuilder();
-        sb.append("id:" + user.getId() + ", account:" + user.getAccount() + ", name:" + user.getName() + "\n");
+        sb.append("id:" + user.getId() + ", account:" + user.getAccount() + "\n");
         return sb.toString();
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String test() {
-        return "success";
-    }
 }

@@ -11,6 +11,4 @@ public interface LoginService {
 
     boolean loginByAccount(String account, String password, HttpServletResponse response);
 
-    boolean loginByName(String name, String password, HttpServletResponse response);
-
 }

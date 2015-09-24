@@ -1,5 +1,7 @@
 package com.renren.gota.webserver.service;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * 注册接口
  * 
@@ -7,6 +9,6 @@ package com.renren.gota.webserver.service;
  */
 public interface RegistryService {
 
-    boolean registry(String account, String name, String password);
+    boolean registry(String account, String password, HttpServletResponse response);
 
 }
