@@ -16,35 +16,17 @@
   <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <%--<button onclick="">获取所有联系人</button>--%>
+  <a href="/gmail/contacts">返回</a>
   <br>
-  <table>
-
-    <th>
-      <tr>
-        <td>用户名</td>
-        <td>邮箱</td>
-        <td>电话</td>
-        <td>操作</td>
-      </tr>
-    </th>
-    <tbody>
-  <c:forEach var="contact" items="${contactList }">
-
-      <tr>
-        <td>${contact.getUserName()}</td>
-        <td>${contact.getEmailList()}</td>
-        <td>${contact.getPhoneList()}</td>
-        <td><a href="/gmail/contact/delete?contactId=${contact.getContactId()}">删除</a> &nbsp;
-          <a href="/gmail/contact/detail?contactId=${contact.getContactId()}">详情</a></td>
-      </tr>
-
+  <br>
+  Id : ${contact.getContactId()}<br>
+  Name: ${contact.getUserName()}<br>
+  <c:forEach var="email" items="${contact.getEmailList()}">
+    Email: ${email}<br>
   </c:forEach>
-    </tbody>
-
-  </table>
-
-  <br>
+  <c:forEach var="phone" items="${contact.getPhoneList()}">
+    Phone: ${phone}<br>
+  </c:forEach>
 
 </body>
 </html>

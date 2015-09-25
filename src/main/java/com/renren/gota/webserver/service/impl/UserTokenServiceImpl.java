@@ -3,6 +3,8 @@ package com.renren.gota.webserver.service.impl;
 import com.renren.gota.webserver.dao.UserTokenDAO;
 import com.renren.gota.webserver.model.UserToken;
 import com.renren.gota.webserver.service.UserTokenService;
+import com.renren.gota.webserver.util.GmailContactsUtils;
+import com.renren.gota.webserver.util.OAuth2Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +37,20 @@ public class UserTokenServiceImpl implements UserTokenService {
         userTokenDAO.addUserToken(userToken);
     }
 
+//    @Override
+//    public UserToken getUserTokenById(int userId) {
+//        return userTokenDAO.getUserTokenById(userId);
+//    }
+
     @Override
     public UserToken getUserTokenById(int userId) {
-        return userTokenDAO.getUserTokenById(userId);
+        UserToken ut = userTokenDAO.getUserTokenById(userId);
+        String token = ut.getAccessToken();
+        if(OAuth2Util.isTokenExpired(token)) {
+            token = OAuth2Util.getAccessToken(ut.getAccessToken(), ut.getRefreshToken());
+            ut.setAccessToken(token);
+            updateUserToken(ut);
+        }
+        return ut;
     }
 }

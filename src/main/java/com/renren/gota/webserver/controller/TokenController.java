@@ -2,16 +2,13 @@ package com.renren.gota.webserver.controller;
 
 import com.google.api.client.repackaged.com.google.common.base.Joiner;
 import com.google.api.client.util.Lists;
-import com.google.common.base.Strings;
 import com.renren.gota.webserver.common.annotation.LoginRequired;
 import com.renren.gota.webserver.model.User;
 import com.renren.gota.webserver.model.UserToken;
 import com.renren.gota.webserver.service.UserTokenService;
 import com.renren.gota.webserver.util.GmailConstants;
-import com.renren.gota.webserver.util.HttpUtils;
 import com.renren.gota.webserver.util.OAuth2Util;
 import net.sf.json.JSONObject;
-import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,6 +68,7 @@ public class TokenController {
 
         User user = (User) request.getAttribute("user");
         UserToken ut = OAuth2Util.getAccessTokenByCode(code);
+        logger.info("userToken DATA: " + ut.toString());
         ut.setUserId(user.getId());
         UserToken oldUT = userTokenService.getUserTokenById(user.getId());
         if(oldUT != null)

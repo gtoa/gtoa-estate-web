@@ -37,9 +37,9 @@
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
-			value="jdbc:mysql://10.4.24.13:3306/gtoa?useUnicode=true&amp;characterEncoding=UTF-8" />
-		<property name="username" value="gtoa_user" />
-		<property name="password" value="myibatis_3306" />
+			value="jdbc:mysql://snowdb.c2j0tuhmz03d.us-west-2.rds.amazonaws.com:3306/gtoa?useUnicode=true&amp;characterEncoding=UTF-8" />
+		<property name="username" value="master" />
+		<property name="password" value="12345678" />
 	</bean>
 
 	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

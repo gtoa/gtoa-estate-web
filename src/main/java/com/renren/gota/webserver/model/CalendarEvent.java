@@ -3,6 +3,7 @@ package com.renren.gota.webserver.model;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
+import com.renren.gota.webserver.util.TimeUtils;
 
 import java.util.Date;
 
@@ -83,16 +84,16 @@ public class CalendarEvent {
         this.desc = desc;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public String getStartTime() {
+        return TimeUtils.format(startTime, TimeUtils.yyyy_MM_dd_HH_mm_ss);
     }
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public String getEndTime() {
+        return TimeUtils.format(endTime, TimeUtils.yyyy_MM_dd_HH_mm_ss);
     }
 
     public void setEndTime(Date endTime) {

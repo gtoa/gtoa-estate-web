@@ -81,7 +81,7 @@ public class OAuth2Util {
      * @param token
      * @return
      */
-    private static boolean isTokenExpired(String token) {
+    public static boolean isTokenExpired(String token) {
 
         boolean rs = true;
         NameValuePair[] params = {

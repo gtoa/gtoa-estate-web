@@ -44,7 +44,7 @@ public interface UserTokenDAO {
             + " code = #{code}, "
             + " access_token = #{accessToken}, "
             + " refresh_token = #{refreshToken}, "
-            + " update_time = now(), "
+            + " update_time = now() "
             + " where "
             + " user_id = #{userId} "
             + "")
