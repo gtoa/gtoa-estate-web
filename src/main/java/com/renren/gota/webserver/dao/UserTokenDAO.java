@@ -1,5 +1,6 @@
 package com.renren.gota.webserver.dao;
 
+import com.renren.gota.webserver.dao.annotation.DataSourceBase;
 import com.renren.gota.webserver.model.User;
 import com.renren.gota.webserver.model.UserToken;
 import org.apache.ibatis.annotations.Insert;
@@ -14,6 +15,7 @@ import java.util.List;
  * @Author xiaoxue.wang
  * @Date 2015-09-23 20:23.
  */
+@DataSourceBase
 public interface UserTokenDAO {
     String TABLE_NAME = " user_token ";
     String FIELDS = " user_id, code, access_token, refresh_token, create_time, update_time ";

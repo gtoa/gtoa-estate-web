@@ -59,7 +59,7 @@ public class TokenController {
                 GmailConstants.REDIRECT_URL +
                 "&response_type=code&client_id=" +
                 GmailConstants.CONSUMER_KEY +
-                "approval_prompt=force&access_type=offline";
+                "&approval_prompt=force&access_type=offline";
         mav.addObject("authUrl", authUrl);
         return mav;
     }

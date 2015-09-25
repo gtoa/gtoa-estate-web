@@ -4,6 +4,7 @@ import com.renren.gota.webserver.dao.UserTokenDAO;
 import com.renren.gota.webserver.model.UserToken;
 import com.renren.gota.webserver.service.UserTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @Author xiaoxue.wang
  * @Date 2015-09-23 21:02.
  */
+@Service
 public class UserTokenServiceImpl implements UserTokenService {
 
     @Autowired
