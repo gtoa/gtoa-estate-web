@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import com.renren.gota.webserver.constant.Constants;
 import com.renren.gota.webserver.dao.SessionDAO;
@@ -43,7 +44,8 @@ public class RegistryServiceImpl implements RegistryService {
             return false;
         }
 
-        user = new User(account, password);
+        String passwordMd5 = DigestUtils.md5DigestAsHex(password.getBytes());
+        user = new User(account, passwordMd5);
 
         userDAO.insert(user);
 

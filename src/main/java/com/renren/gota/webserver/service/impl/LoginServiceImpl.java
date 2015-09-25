@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import com.renren.gota.webserver.constant.Constants;
 import com.renren.gota.webserver.dao.SessionDAO;
@@ -36,13 +37,13 @@ public class LoginServiceImpl implements LoginService {
         }
 
         String realPassword = user.getPassword();
-        if (!realPassword.equals(password)) {
+        String inputPasswordMd5 = DigestUtils.md5DigestAsHex(password.getBytes());
+        if (!realPassword.equals(inputPasswordMd5)) {
             return false;
         }
 
         return login(user, response);
     }
-
 
     private boolean login(User user, HttpServletResponse response) {
 
