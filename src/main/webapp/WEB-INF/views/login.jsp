@@ -1,5 +1,5 @@
 <html>
-        <head>registry from me</head>
+        <head>login from me</head>
         <body>
                 <form name="form1" action="login" method="post">
                         <table width="200" border="1">

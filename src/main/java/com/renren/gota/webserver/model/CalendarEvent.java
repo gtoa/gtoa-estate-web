@@ -60,8 +60,8 @@ public class CalendarEvent {
         this.summery = summery;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getCreateTime() {
+        return TimeUtils.format(createTime, TimeUtils.yyyy_MM_dd_HH_mm_ss);
     }
 
     public void setCreateTime(Date createTime) {

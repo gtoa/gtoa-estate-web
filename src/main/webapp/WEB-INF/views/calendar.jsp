@@ -22,9 +22,12 @@
 
   <th>
     <tr>
-      <td>用户名</td>
-      <td>邮箱</td>
-      <td>电话</td>
+      <td>summery</td>
+      <td>desc</td>
+      <td>creator</td>
+      <td>创建时间</td>
+      <td>开始时间</td>
+      <td>结束时间</td>
       <td>操作</td>
     </tr>
   </th>
@@ -32,11 +35,14 @@
   <c:forEach var="event" items="${eventList }">
 
     <tr>
-      <td>${contact.getUserName()}</td>
-      <td>${contact.getEmailList()}</td>
-      <td>${contact.getPhoneList()}</td>
-      <td><a href="/gmail/contact/delete?contactId=${contact.getContactId()}">删除</a> &nbsp;
-        <a href="/gmail/contact/detail?contactId=${contact.getContactId()}">详情</a></td>
+      <td>${event.getSummery()}</td>
+      <td>${event.getDesc()}</td>
+      <td>${event.getCreator()}</td>
+      <td>${event.getCreateTime()}</td>
+      <td>${event.getStartTime()}</td>
+      <td>${event.getEndTime()}</td>
+      <td><a href="/calendar/delete?eventId=${event.getId()}">删除</a> &nbsp;
+        <a href="/calendar/detail?eventId=${event.getId()}">详情</a></td>
     </tr>
 
   </c:forEach>

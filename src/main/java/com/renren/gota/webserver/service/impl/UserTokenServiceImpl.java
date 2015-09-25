@@ -45,6 +45,8 @@ public class UserTokenServiceImpl implements UserTokenService {
     @Override
     public UserToken getUserTokenById(int userId) {
         UserToken ut = userTokenDAO.getUserTokenById(userId);
+        if(ut == null)
+            return null;
         String token = ut.getAccessToken();
         if(OAuth2Util.isTokenExpired(token)) {
             token = OAuth2Util.getAccessToken(ut.getAccessToken(), ut.getRefreshToken());
