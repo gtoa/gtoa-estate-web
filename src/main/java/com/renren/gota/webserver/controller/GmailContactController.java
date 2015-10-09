@@ -60,7 +60,7 @@ public class GmailContactController {
         User user = (User) request.getAttribute("user");
         UserToken ut = userTokenService.getUserTokenById(user.getId());
         try {
-            List<ContactEntry> contactList = GmailContactsUtils.getContacts(ut.getAccessToken());
+            List<ContactEntry> contactList = GmailContactsUtils.getContacts(ut.getAccessToken(), 200);
             List<GmailContactEntry> gmailContactEntryList = new ArrayList<GmailContactEntry>();
             for(ContactEntry contact : contactList) {
                 gmailContactEntryList.add(new GmailContactEntry(contact));

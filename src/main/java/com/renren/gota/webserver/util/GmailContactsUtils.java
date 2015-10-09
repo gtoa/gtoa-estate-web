@@ -1,5 +1,6 @@
 package com.renren.gota.webserver.util;
 
+import com.google.gdata.client.Query;
 import com.google.gdata.client.authn.oauth.GoogleOAuthParameters;
 import com.google.gdata.client.authn.oauth.OAuthException;
 import com.google.gdata.client.authn.oauth.OAuthHmacSha1Signer;
@@ -34,7 +35,7 @@ public class GmailContactsUtils {
     }
 
     //获取联系人列表
-    public static List<ContactEntry> getContacts(String accessToken) throws OAuthException, IOException, ServiceException {
+    public static List<ContactEntry> getContacts(String accessToken, Integer maxResults) throws OAuthException, IOException, ServiceException {
         GoogleOAuthParameters oauthParameters = initOauthParams(accessToken);
         ContactsService client = new ContactsService(GmailConstants.APPLICATION_NAME);
 
@@ -45,7 +46,11 @@ public class GmailContactsUtils {
         client.setHeader("GData-Version", "3.0");
 
         URL feedUrl = new URL(GmailConstants.CONTACT_FEED_URL);
-        resultFeed = client.getFeed(feedUrl, ContactFeed.class);
+        Query query = new Query(feedUrl);
+        if(maxResults != null)
+            query.setMaxResults(maxResults);
+
+        resultFeed = client.query(query, ContactFeed.class);
         System.out.println(resultFeed.getTitle().getPlainText());
         return resultFeed.getEntries();
 
@@ -172,7 +177,7 @@ public class GmailContactsUtils {
 //            deleteContact(token, "http://www.google.com/m8/feeds/contacts/default/full/7bf187ac0e27ab2b");
             ContactEntry contactEntry = initContact();
             addContact(token, contactEntry);
-            List<ContactEntry> contactList = getContacts(token);
+            List<ContactEntry> contactList = getContacts(token, 50);
             for(ContactEntry contact : contactList) {
                 System.out.println(contact.getTitle().getPlainText());
                 System.out.println(contact.getId());

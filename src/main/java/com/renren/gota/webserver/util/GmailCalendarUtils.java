@@ -55,6 +55,8 @@ public class GmailCalendarUtils {
                             eventList.add(new CalendarEvent(event));
                             System.out.println(new CalendarEvent(event));
                         }catch (Exception e) {
+                            logger.error("start date" + event.getStart());
+                            logger.error("end date" + event.getEnd());
                             logger.error(e.getMessage(), e);
                             continue;
                         }

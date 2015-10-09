@@ -1,6 +1,8 @@
 <html>
         <head>login from me</head>
         <body>
+                <a href="/registry">registry</a>
+                <br>
                 <form name="form1" action="login" method="post">
                         <table width="200" border="1">
                         <tr>

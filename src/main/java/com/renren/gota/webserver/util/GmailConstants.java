@@ -15,7 +15,8 @@ public class GmailConstants {
 
     public static final String AUTH_URL = "https://accounts.google.com/o/oauth2/auth";
     public static final String GET_TOKEN_URL = "https://www.googleapis.com/oauth2/v3/token";
-    public static final String REDIRECT_URL = "http://mortgages.ren/token/code";
+//    public static final String REDIRECT_URL = "http://mortgages.ren/token/code";
+    public static final String REDIRECT_URL = "http://ec2-52-10-77-190.us-west-2.compute.amazonaws.com/token/code";
     public static final String IS_AUTH_EXPIRED_URL = "https://www.googleapis.com/oauth2/v1/tokeninfo";
 
     public static final String CONTACT_SCOPE_READONLY = "https://www.googleapis.com/auth/contacts.readonly";
