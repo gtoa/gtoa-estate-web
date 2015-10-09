@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.renren.gota.webserver.constant.Constants;
 import com.renren.gota.webserver.service.LoginService;
 
+import java.io.IOException;
+
 @Controller
 public class LoginController {
 
@@ -23,8 +25,8 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+//    @ResponseBody
     public String login(HttpServletResponse response, @RequestParam("account") String account,
         @RequestParam("password") String password) {
 
@@ -35,9 +37,16 @@ public class LoginController {
         }
 
         if (succ) {
-            return "login success";
+            try {
+                response.sendRedirect("/token");
+                return null;
+            } catch (IOException e) {
+                return e.getMessage();
+//                logger.error(e.getMessage(), e);
+            }
+//            return "login success";
         }
 
-        return "login error";
+        return null;
     }
 }

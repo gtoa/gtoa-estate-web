@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public class TokenController {
 
     @LoginRequired
     @RequestMapping(value = "")
-    public ModelAndView getTokenPage() {
+    public ModelAndView getTokenPage(HttpServletRequest request) {
         List<String> scopeList = Lists.newArrayList();
         scopeList.add(GmailConstants.CONTACT_SCOPE_READONLY);
         scopeList.add(GmailConstants.CONTACT_SCOPE_RW);
@@ -56,12 +57,18 @@ public class TokenController {
                 GmailConstants.CONSUMER_KEY +
                 "&approval_prompt=force&access_type=offline";
         mav.addObject("authUrl", authUrl);
+        User user = (User) request.getAttribute("user");
+        int userId = user.getId();
+        UserToken ut = userTokenService.getUserTokenById(userId);
+        if(ut != null)
+            mav.addObject("hasToken", 1);
+        else
+            mav.addObject("hasToken", 0);
         return mav;
     }
 
     @LoginRequired
     @RequestMapping(value = "code")
-    @ResponseBody
     public String getTokenCode(HttpServletResponse response,
                                HttpServletRequest request,
                                @RequestParam("code") String code) {
@@ -75,10 +82,13 @@ public class TokenController {
             userTokenService.updateUserToken(ut);
         else
             userTokenService.addUserToken(ut);
-        JSONObject json = new JSONObject();
-        json.put("code", 0);
-        json.put("message", "success");
-        return json.toString();
+
+        try {
+            response.sendRedirect("/token");
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
 
     }
 

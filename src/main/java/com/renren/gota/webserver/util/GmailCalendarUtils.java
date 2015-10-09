@@ -43,13 +43,15 @@ public class GmailCalendarUtils {
         do {
 
             Events events = calendarClient.events().list("primary").setPageToken(pageToken).execute();
-            List<Event> items = events.getItems();
-            for (Event event : items) {
-                if(event != null)
-                    eventList.add(new CalendarEvent(event));
-                System.out.println(new CalendarEvent(event));
+            if( events != null) {
+                List<Event> items = events.getItems();
+                for (Event event : items) {
+                    if (event != null)
+                        eventList.add(new CalendarEvent(event));
+                    System.out.println(new CalendarEvent(event));
+                }
+                pageToken = events.getNextPageToken();
             }
-            pageToken = events.getNextPageToken();
         } while (pageToken != null);
 
         return eventList;
@@ -143,8 +145,8 @@ public class GmailCalendarUtils {
         return event;
     }
     public static void main(String[] args) {
-        String token = OAuth2Util.getAccessToken("ya29.9wHvWsqOBaYDmutzBKdRlEuXIrCjSXV2eamoC-UEl7M6tI519_DC-X8_Dk6UUpwzozdLGw",
-                "1/-r3y9bTSZbzMQ2ZXtX8rWbJcCBXDNiyLfFo3ejw9pTYMEudVrK5jSpoR30zcRFq6");
+        String token = OAuth2Util.getAccessToken("ya29.-QEiNd4xlkeqvXLr734HxsplFys7XtOe1s7na2KzZp4Wp-TPW1W6-J2pwxrGUlo0lL2DHwss",
+                "1/XcXPqJ7Qpcm0hhGbacmaR5Eyt3j2Z2i7SNNvg2QMhB8");
         System.out.println(token);
 ////        getCalendar(token);
         try {

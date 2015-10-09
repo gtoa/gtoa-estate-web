@@ -12,6 +12,7 @@ import com.renren.gota.webserver.model.UserToken;
 import com.renren.gota.webserver.service.UserTokenService;
 import com.renren.gota.webserver.util.GmailCalendarUtils;
 import com.renren.gota.webserver.util.ServiceResultUtil;
+import com.renren.gota.webserver.util.TimeUtils;
 import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -127,7 +129,7 @@ public class GoogleCalendarController {
                 .setLocation(location)
                 .setDescription(desc);
 
-        DateTime startDateTime = new DateTime(startTime.getTime())
+        DateTime startDateTime = new DateTime(startTime.getTime());
         EventDateTime start = new EventDateTime()
                 .setDateTime(startDateTime)
                 .setTimeZone("America/Los_Angeles");
@@ -173,8 +175,8 @@ public class GoogleCalendarController {
                            @RequestParam("summary") String summary,
                            @RequestParam("desc") String desc,
                            @RequestParam("location") String location,
-                           @RequestParam("startTime")Date startTime,
-                           @RequestParam("endTime") Date endTime){
+                           @RequestParam("startTime")String strStartTime,
+                           @RequestParam("endTime") String strEndTime){
 
         User user = (User) request.getAttribute("user");
         UserToken ut = userTokenService.getUserTokenById(user.getId());
@@ -182,7 +184,15 @@ public class GoogleCalendarController {
             logger.error("没有token数据， 请授权");
             return null;
         }
-        Event event = getCalendarEvent(summary, desc, location, startTime, endTime);
+        Date startTime = null;
+        Event event = null;
+        try {
+            startTime = TimeUtils.parse(strStartTime, TimeUtils.yyyy_MM_dd_HH_mm_ss);
+            Date endTime = TimeUtils.parse(strEndTime, TimeUtils.yyyy_MM_dd_HH_mm_ss);
+            event = getCalendarEvent(summary, desc, location, startTime, endTime);
+        } catch (ParseException e) {
+            logger.error(e.getMessage(), e);
+        }
         try {
             GmailCalendarUtils.addCalendarEvent(ut.getAccessToken(), event);
             response.sendRedirect("/calendar");

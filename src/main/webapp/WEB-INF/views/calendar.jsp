@@ -9,14 +9,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>联系人</title>
+  <title>日历事件</title>
   <script type="text/javascript" src="http://s.xnimg.cn/ajax/jquery/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/js/gtoa.js"></script>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<%--<button onclick="">获取所有联系人</button>--%>
+<a href="/calendar/add">添加事件</a>
 <br>
 <table>
 

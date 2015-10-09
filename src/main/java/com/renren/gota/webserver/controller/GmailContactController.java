@@ -1,7 +1,9 @@
 package com.renren.gota.webserver.controller;
 
 import com.google.gdata.client.authn.oauth.OAuthException;
+import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.contacts.ContactEntry;
+import com.google.gdata.data.extensions.*;
 import com.google.gdata.util.ServiceException;
 import com.renren.gota.webserver.common.annotation.LoginRequired;
 import com.renren.gota.webserver.model.GmailContactEntry;
@@ -100,8 +102,7 @@ public class GmailContactController {
     }
 
     @LoginRequired
-    @RequestMapping(value = "contact/delete")
-    @ResponseBody
+    @RequestMapping(value = "contact/delete", method = RequestMethod.GET)
     public String delContact(HttpServletResponse response,
                                        HttpServletRequest request,
                              @RequestParam("contactId")String contactId) {
@@ -129,30 +130,70 @@ public class GmailContactController {
     }
 
     @LoginRequired
-    @RequestMapping(value = "contact/add")
-    @ResponseBody
-    public JSONObject addContact(HttpServletResponse response,
-                                 HttpServletRequest request,
-                                 @RequestParam("contactId") String contactId) {
+    @RequestMapping(value = "contact/add", method = RequestMethod.GET)
+    public ModelAndView getAddEventPage() {
+        ModelAndView mav = new ModelAndView("addContact");
+        return mav;
+    }
 
-        JSONObject json = new JSONObject();
+    @LoginRequired
+    @RequestMapping(value = "contact/add", method = RequestMethod.POST)
+    public String addContact(HttpServletResponse response,
+                                 HttpServletRequest request,
+                                 @RequestParam("familyName") String familyName,
+                                 @RequestParam("givenName") String givenName,
+                                 @RequestParam("emailAddress") String emailAddress,
+                                 @RequestParam("phoneNumber") String phoneNumber
+    ) {
+
         User user = (User) request.getAttribute("user");
         UserToken ut = userTokenService.getUserTokenById(user.getId());
 
         try {
-            GmailContactsUtils.deleteContact(ut.getAccessToken(), contactId);
-            ServiceResultUtil.addResultCodeAndMsg(json, 0, "success");
+            ContactEntry contact = initContact(familyName, givenName, emailAddress, phoneNumber);
+            GmailContactsUtils.addContact(ut.getAccessToken(), contact);
         } catch (OAuthException e) {
-            ServiceResultUtil.addResultCodeAndMsg(json, 1, e.getMessage());
             logger.error(e.getMessage(), e);
         } catch (IOException e) {
-            ServiceResultUtil.addResultCodeAndMsg(json, 2, e.getMessage());
             logger.error(e.getMessage(), e);
         } catch (ServiceException e) {
-            ServiceResultUtil.addResultCodeAndMsg(json, 3, e.getMessage());
             logger.error(e.getMessage(), e);
         }
-        return json;
+        try {
+            response.sendRedirect("/gmail/contacts");
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
+    private  ContactEntry initContact(String familyName, String givenName, String emailAddress,
+                                      String phoneNumber) {
+        ContactEntry contact = new ContactEntry();
+        // Set the contact's name.
+        Name name = new Name();
+        final String NO_YOMI = null;
+        String fullName = familyName + " " + givenName;
+        name.setFullName(new FullName(fullName, NO_YOMI));
+        name.setGivenName(new GivenName(givenName, NO_YOMI));
+        name.setFamilyName(new FamilyName(familyName, NO_YOMI));
+        contact.setName(name);
+//        contact.setContent(new PlainTextConstruct("Notes"));
+        // Set contact's e-mail addresses.
+        Email primaryMail = new Email();
+        primaryMail.setAddress(emailAddress);
+        primaryMail.setDisplayName(givenName);
+        primaryMail.setRel("http://schemas.google.com/g/2005#home");
+        primaryMail.setPrimary(true);
+        contact.addEmailAddress(primaryMail);
+
+        // Set contact's phone numbers.
+        PhoneNumber primaryPhoneNumber = new PhoneNumber();
+        primaryPhoneNumber.setPhoneNumber(phoneNumber);
+        primaryPhoneNumber.setRel("http://schemas.google.com/g/2005#work");
+        primaryPhoneNumber.setPrimary(true);
+        contact.addPhoneNumber(primaryPhoneNumber);
+        return contact;
     }
 
 }

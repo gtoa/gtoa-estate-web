@@ -16,8 +16,9 @@
   <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <%--<button onclick="">获取所有联系人</button>--%>
+  <a href="/gmail/contact/add">添加联系人</a>
   <br>
+
   <table>
 
     <th>
