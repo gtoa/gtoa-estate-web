@@ -10,6 +10,8 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.*;
 import com.renren.gota.webserver.model.CalendarEvent;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -29,6 +31,8 @@ public class GmailCalendarUtils {
 
     private static Calendar calendarClient;
 
+    private static Log logger = LogFactory.getLog(GmailCalendarUtils.class);
+
     //获取日历事件list
     public static List<CalendarEvent> getCalendarEventList(String accessToken) throws IOException, GeneralSecurityException{
         List<CalendarEvent> eventList = new ArrayList<CalendarEvent>();
@@ -46,9 +50,15 @@ public class GmailCalendarUtils {
             if( events != null) {
                 List<Event> items = events.getItems();
                 for (Event event : items) {
-                    if (event != null)
-                        eventList.add(new CalendarEvent(event));
-                    System.out.println(new CalendarEvent(event));
+                    if (event != null) {
+                        try {
+                            eventList.add(new CalendarEvent(event));
+                            System.out.println(new CalendarEvent(event));
+                        }catch (Exception e) {
+                            logger.error(e.getMessage(), e);
+                            continue;
+                        }
+                    }
                 }
                 pageToken = events.getNextPageToken();
             }

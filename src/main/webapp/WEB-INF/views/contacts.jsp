@@ -16,6 +16,7 @@
   <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+ <a href="/">首页</a>&nbsp; &nbsp; &nbsp; &nbsp;
   <a href="/gmail/contact/add">添加联系人</a>
   <br>
 

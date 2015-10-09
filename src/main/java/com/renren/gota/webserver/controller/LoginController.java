@@ -38,7 +38,7 @@ public class LoginController {
 
         if (succ) {
             try {
-                response.sendRedirect("/token");
+                response.sendRedirect("/");
                 return null;
             } catch (IOException e) {
                 return e.getMessage();

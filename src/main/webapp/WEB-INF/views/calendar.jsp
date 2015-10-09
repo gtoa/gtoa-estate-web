@@ -16,6 +16,7 @@
   <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<a href="/">首页</a> &nbsp; &nbsp; &nbsp; &nbsp;
 <a href="/calendar/add">添加事件</a>
 <br>
 <table>

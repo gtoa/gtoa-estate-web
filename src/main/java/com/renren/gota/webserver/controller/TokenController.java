@@ -84,7 +84,7 @@ public class TokenController {
             userTokenService.addUserToken(ut);
 
         try {
-            response.sendRedirect("/token");
+            response.sendRedirect("/");
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         }

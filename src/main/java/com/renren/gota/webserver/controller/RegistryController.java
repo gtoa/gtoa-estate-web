@@ -44,7 +44,7 @@ public class RegistryController {
         boolean succ = registryService.registry(account, password, response);
         if ( succ ) {
             try {
-                response.sendRedirect("/token");
+                response.sendRedirect("/");
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
             }
