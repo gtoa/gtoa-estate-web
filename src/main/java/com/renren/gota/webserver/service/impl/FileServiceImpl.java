@@ -2,12 +2,17 @@ package com.renren.gota.webserver.service.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.jets3t.service.S3Service;
 import org.jets3t.service.S3ServiceException;
 import org.jets3t.service.ServiceException;
@@ -52,7 +57,6 @@ public class FileServiceImpl implements FileService {
             S3Object[] objects = s3Service.listObjects(BUCKET_NAME, prefix, delimiter);
             for (S3Object obj : objects) {
                 String fileName = removePrefix(obj.getName(), prefix);
-
                 list.add(fileName);
             }
         } catch (S3ServiceException e) {
@@ -73,12 +77,10 @@ public class FileServiceImpl implements FileService {
 
         boolean uploadResult = false;
         S3Object object = new S3Object(fileName);
-        ByteArrayInputStream bais;
         try {
-            bais = new ByteArrayInputStream(file.getBytes());
-            object.setDataInputStream(bais);
-            object.setContentLength(bais.available());
-            object.setContentType("text/plain");
+            object.setDataInputStream(file.getInputStream());
+            object.setContentLength(file.getSize());
+            object.setContentType(file.getContentType());
             object = s3Service.putObject(BUCKET_NAME, object);
             if (null == object) {
                 uploadResult = false;
@@ -93,9 +95,9 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public InputStream downloadFile(User user, String fileName) {
-        if (null == user || StringUtils.isBlank(fileName)) {
-            return null;
+    public void downloadFile(User user, String fileName, HttpServletResponse response) {
+        if (null == user || StringUtils.isBlank(fileName) || null == response) {
+            return ;
         }
 
         String prefix = getUserFilePrefix(user);
@@ -103,12 +105,24 @@ public class FileServiceImpl implements FileService {
         try {
             S3Object s3Object = s3Service.getObject(BUCKET_NAME, objectKey);
             if (null == s3Object || s3Object.getDataInputStream() == null) {
-                return null;
+                return ;
             }
-            return s3Object.getDataInputStream();
+            InputStream in = s3Object.getDataInputStream();
+            response.setContentType(s3Object.getContentType());
+            response.setHeader("Content-Disposition", "attachment;fileName=" + new String(fileName.getBytes("utf-8"), "ISO8859-1"));
+            if (null == in) {
+                return;
+            }
+            OutputStream out = response.getOutputStream();
+            byte[] b = new byte[1024 * 1024];
+            int len;
+            while ((len = in.read(b)) > 0) {
+                out.write(b, 0, len);
+            }
+            in.close();
+            
         } catch (Exception e) {
             LOG.error("get object from s3 error", e);
-            return null;
         }
     }
 

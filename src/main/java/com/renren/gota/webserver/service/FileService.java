@@ -3,6 +3,8 @@ package com.renren.gota.webserver.service;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.renren.gota.webserver.model.User;
@@ -32,6 +34,6 @@ public interface FileService {
     /**
      * 下载用户指定的文件
      */
-    public InputStream downloadFile(User user, String fileName);
+    public void downloadFile(User user, String fileName, HttpServletResponse response);
 
 }

@@ -51,19 +51,7 @@ public class FilesController {
     public void downloadFile(HttpServletRequest request, HttpServletResponse response, @RequestParam String fileName)
         throws IOException {
         User user = (User) request.getAttribute("user");
-        response.setContentType("multipart/form-data");
-        response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
-        InputStream in = fileService.downloadFile(user, fileName);
-        if (null == in) {
-            return;
-        }
-        OutputStream out = response.getOutputStream();
-        byte[] b = new byte[1024 * 1024];
-        int len;
-        while ((len = in.read(b)) > 0) {
-            out.write(b, 0, len);
-        }
-        in.close();
+        fileService.downloadFile(user, fileName, response);
     }
 
     @RequestMapping(value = "/uploadfile", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
