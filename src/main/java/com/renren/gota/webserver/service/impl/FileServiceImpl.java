@@ -28,7 +28,7 @@ public class FileServiceImpl implements FileService {
 
     private static Log LOG = LogFactory.getLog(FileServiceImpl.class);
     private static S3Service s3Service;
-    private static final String BUCKET_NAME = "bucket.zhanzhan";
+    private static final String BUCKET_NAME = "bucket.userfiles";
 
     static {
         AWSCredentials credentials =
