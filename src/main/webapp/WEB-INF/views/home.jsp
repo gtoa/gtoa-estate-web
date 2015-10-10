@@ -26,6 +26,7 @@
             <c:if test="${hasToken > 0}">
                 <a href="/calendar"> 日历事件</a><br>
                 <a href="/gmail/contacts">联系人</a><br>
+                <a href="/showfiles" > 文件管理</a> <br>
             </c:if>
             <c:if test="${hasToken <= 0}">
                 <a href="${authUrl}">授权</a><br>
