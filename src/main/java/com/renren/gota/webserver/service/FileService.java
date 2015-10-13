@@ -1,6 +1,5 @@
 package com.renren.gota.webserver.service;
 
-import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;

@@ -1,9 +1,7 @@
 package com.renren.gota.webserver.service.impl;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.jets3t.service.S3Service;
 import org.jets3t.service.S3ServiceException;
 import org.jets3t.service.ServiceException;
@@ -97,7 +94,7 @@ public class FileServiceImpl implements FileService {
     @Override
     public void downloadFile(User user, String fileName, HttpServletResponse response) {
         if (null == user || StringUtils.isBlank(fileName) || null == response) {
-            return ;
+            return;
         }
 
         String prefix = getUserFilePrefix(user);
@@ -105,11 +102,12 @@ public class FileServiceImpl implements FileService {
         try {
             S3Object s3Object = s3Service.getObject(BUCKET_NAME, objectKey);
             if (null == s3Object || s3Object.getDataInputStream() == null) {
-                return ;
+                return;
             }
             InputStream in = s3Object.getDataInputStream();
             response.setContentType(s3Object.getContentType());
-            response.setHeader("Content-Disposition", "attachment;fileName=" + new String(fileName.getBytes("utf-8"), "ISO8859-1"));
+            response.setHeader("Content-Disposition", "attachment;fileName="
+                                                      + new String(fileName.getBytes("utf-8"), "ISO8859-1"));
             if (null == in) {
                 return;
             }
@@ -120,7 +118,7 @@ public class FileServiceImpl implements FileService {
                 out.write(b, 0, len);
             }
             in.close();
-            
+
         } catch (Exception e) {
             LOG.error("get object from s3 error", e);
         }
