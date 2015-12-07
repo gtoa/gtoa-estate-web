@@ -1,4 +1,4 @@
-package com.renren.gota.webserver.util;
+package com.renren.gota.webserver.utils;
 
 import net.sf.json.JSONObject;
 

@@ -6,12 +6,11 @@ import com.google.api.client.repackaged.com.google.common.base.Joiner;
 import com.google.api.client.util.Lists;
 import com.renren.gota.webserver.model.UserToken;
 import com.renren.gota.webserver.service.UserTokenService;
-import com.renren.gota.webserver.util.GmailConstants;
+import com.renren.gota.webserver.utils.GmailConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.renren.gota.webserver.common.annotation.LoginRequired;
 import com.renren.gota.webserver.model.User;

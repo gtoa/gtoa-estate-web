@@ -1,4 +1,4 @@
-package com.renren.gota.webserver.util;
+package com.renren.gota.webserver.utils;
 
 import com.google.gdata.client.Query;
 import com.google.gdata.client.authn.oauth.GoogleOAuthParameters;

@@ -1,4 +1,4 @@
-package com.renren.gota.webserver.util;
+package com.renren.gota.webserver.utils;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;

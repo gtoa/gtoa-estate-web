@@ -1,7 +1,6 @@
 package com.renren.gota.webserver.controller;
 
 import com.google.gdata.client.authn.oauth.OAuthException;
-import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.contacts.ContactEntry;
 import com.google.gdata.data.extensions.*;
 import com.google.gdata.util.ServiceException;
@@ -10,9 +9,7 @@ import com.renren.gota.webserver.model.GmailContactEntry;
 import com.renren.gota.webserver.model.User;
 import com.renren.gota.webserver.model.UserToken;
 import com.renren.gota.webserver.service.UserTokenService;
-import com.renren.gota.webserver.util.GmailContactsUtils;
-import com.renren.gota.webserver.util.ServiceResultUtil;
-import net.sf.json.JSONObject;
+import com.renren.gota.webserver.utils.GmailContactsUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;

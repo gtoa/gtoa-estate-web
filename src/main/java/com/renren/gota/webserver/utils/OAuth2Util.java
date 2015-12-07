@@ -1,6 +1,5 @@
-package com.renren.gota.webserver.util;
+package com.renren.gota.webserver.utils;
 
-import com.renren.gota.webserver.model.User;
 import com.renren.gota.webserver.model.UserToken;
 import net.sf.json.JSONObject;
 import org.apache.commons.httpclient.NameValuePair;

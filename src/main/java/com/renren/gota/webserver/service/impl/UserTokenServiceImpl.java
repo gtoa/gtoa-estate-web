@@ -3,8 +3,7 @@ package com.renren.gota.webserver.service.impl;
 import com.renren.gota.webserver.dao.UserTokenDAO;
 import com.renren.gota.webserver.model.UserToken;
 import com.renren.gota.webserver.service.UserTokenService;
-import com.renren.gota.webserver.util.GmailContactsUtils;
-import com.renren.gota.webserver.util.OAuth2Util;
+import com.renren.gota.webserver.utils.OAuth2Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

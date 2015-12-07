@@ -3,6 +3,7 @@
                 <meta name="google-signin-scope" content="profile email">
                 <meta name="google-signin-client_id" content="405616143986-5ipmf76v2hmt4fei98e42qu22q65r5nf.apps.googleusercontent.com">
                 <script src="https://apis.google.com/js/platform.js" async defer></script>
+                <script src="http://s.xnimg.cn/a67665/actimg/14qudaohoutai/jquery-1.7.2.min.js" ></script>
 
                 <title>login from me</title>
 
@@ -94,11 +95,26 @@
 //                                //console.log('Image URL: ' + profile.getImageUrl());
 //                                console.log('Email: ' + profile.getEmail());
                         }
+                        function twitterSignIn() {
+                                $.post("/thirdreg/twitter/token",
+                                function(data) {
+                                        alert(data.code + " " + data.message);
+                                        var code = data.code;
+                                        if (code == 0) {
+                                                window.location.href = "https://api.twitter.com/oauth/authenticate?oauth_token="
+                                                        + data.oauth_token + "&oauth_token_secret=" + data.oauth_token_secret;
+                                        }
+
+                                }, 'json');
+                        }
+
 
                 </script>
 
                 <fb:login-button scope="public_profile,email" show-faces="true" width="200" max-row="1" onlogin="checkLoginState();">
-                </fb:login-button>
+                </fb:login-button> <br>
+
+                <a class="twitter-share-button" data-size="large" onclick="twitterSignIn();">Tweet</a>
 
                 <div class="g-signin2" data-onsuccess="googleSignIn" data-theme="dark"></div>
 

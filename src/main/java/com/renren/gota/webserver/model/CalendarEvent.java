@@ -3,7 +3,7 @@ package com.renren.gota.webserver.model;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
-import com.renren.gota.webserver.util.TimeUtils;
+import com.renren.gota.webserver.utils.TimeUtils;
 
 import java.util.Date;
 
